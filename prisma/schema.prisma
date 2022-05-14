@@ -9,3 +9,22 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  name String?
+  password String
+  salt String
+  songs Song[]
+}
+
+model Song {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title String @db.VarChar(255)
+  content String?
+  artist User @relation(fields: [artistId], references: [id])
+  artistId Int
+}
