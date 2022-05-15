@@ -10,6 +10,8 @@ export async function registerUserHandler(
 ) {
   const body = request.body;
 
+  console.log(body);
+
   try {
     const user = await createUser(body);
 
