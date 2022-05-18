@@ -4,6 +4,13 @@ import fjwt, { JWT } from 'fastify-jwt';
 import userRoutes from './modules/user/user.route';
 import { userSchemas } from './modules/user/user.schema';
 
+// custom types
+declare module 'fastify' {
+  export interface FastifyInstance {
+    authenticate: any;
+  }
+}
+
 export const server = Fastify();
 
 server.register(fjwt, { secret: process.env.JWT_SECRET });
