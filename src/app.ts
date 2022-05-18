@@ -2,9 +2,21 @@ import Fastify, { FastifyRequest, FastifyReply } from 'fastify';
 import fjwt, { JWT } from 'fastify-jwt';
 // import swagger from 'fastify-swagger';
 import userRoutes from './modules/user/user.route';
+import songRoutes from './modules/song/song.route';
 import { userSchemas } from './modules/user/user.schema';
+import { songSchemas } from './modules/song/song.schema';
 
 // custom types
+
+declare module 'fastify-jwt' {
+  interface FastifyJWT {
+    user: {
+      id: number;
+      email: string;
+      name: string;
+    };
+  }
+}
 declare module 'fastify' {
   export interface FastifyInstance {
     authenticate: any;
@@ -35,7 +47,9 @@ async function main() {
   for (const schema of userSchemas) {
     server.addSchema(schema);
   }
+  
   server.register(userRoutes, { prefix: 'api/v1/users' });
+  // server.register(songRoutes, { prefix: 'api/v1/songs' });
 
   try {
     await server.listen(3000, '0.0.0.0');

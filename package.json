@@ -10,6 +10,7 @@
   "author": "riefer02",
   "license": "ISC",
   "dependencies": {
+    "@fastify/jwt": "^5.0.0",
     "@prisma/client": "^3.14.0",
     "fastify": "^3.29.0",
     "fastify-jwt": "^4.2.0",
