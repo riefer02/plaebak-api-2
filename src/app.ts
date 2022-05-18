@@ -44,12 +44,14 @@ server.get('/healthcheck', async function (req, res) {
 
 async function main() {
   // Register Schemas Before Routes
-  for (const schema of userSchemas) {
+  const schemas = [...userSchemas, ...songSchemas];
+
+  for (const schema of schemas) {
     server.addSchema(schema);
   }
-  
+
   server.register(userRoutes, { prefix: 'api/v1/users' });
-  // server.register(songRoutes, { prefix: 'api/v1/songs' });
+  server.register(songRoutes, { prefix: 'api/v1/songs' });
 
   try {
     await server.listen(3000, '0.0.0.0');
