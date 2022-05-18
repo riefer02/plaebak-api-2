@@ -4,7 +4,6 @@ import { buildJsonSchemas } from 'fastify-zod';
 const songInput = {
   title: z.string(),
   content: z.string().optional(),
-  artistId: z.number(),
 };
 
 const songGenerated = {

@@ -10,6 +10,8 @@ export async function getSongs() {
     select: {
       content: true,
       title: true,
+      createdAt: true,
+      updatedAt: true,
       id: true,
       artist: { select: { name: true, id: true } },
     },

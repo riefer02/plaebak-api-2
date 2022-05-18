@@ -1,10 +1,12 @@
 import Fastify, { FastifyRequest, FastifyReply } from 'fastify';
 import fjwt, { JWT } from 'fastify-jwt';
-// import swagger from 'fastify-swagger';
+import swagger from 'fastify-swagger';
+import { withRefResolver } from 'fastify-zod';
 import userRoutes from './modules/user/user.route';
 import songRoutes from './modules/song/song.route';
 import { userSchemas } from './modules/user/user.schema';
 import { songSchemas } from './modules/song/song.schema';
+import { version } from '../package.json';
 
 // custom types
 
@@ -50,6 +52,21 @@ async function main() {
     server.addSchema(schema);
   }
 
+  server.register(
+    swagger,
+    withRefResolver({
+      routePrefix: '/docs',
+      exposeRoute: true,
+      staticCSP: true,
+      openapi: {
+        info: {
+          title: 'Plaebak API',
+          description: 'API for Plaebak Audio Corp.',
+          version,
+        },
+      },
+    })
+  );
   server.register(userRoutes, { prefix: 'api/v1/users' });
   server.register(songRoutes, { prefix: 'api/v1/songs' });
 

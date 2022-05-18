@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify';
-import { createSongHandler } from './song.controller';
+import { createSongHandler, getSongsHandler } from './song.controller';
 import { $ref } from './song.schema';
 
 async function songRoutes(server: FastifyInstance) {
@@ -13,6 +13,18 @@ async function songRoutes(server: FastifyInstance) {
       },
     },
     createSongHandler
+  );
+
+  server.get(
+    '/',
+    {
+      schema: {
+        response: {
+          200: $ref('songsResponseSchema'),
+        },
+      },
+    },
+    getSongsHandler
   );
 }
 export default songRoutes;
